@@ -1,13 +1,3 @@
-/* 
- * Make sure all the variables below are the same as per what's in 01_setup.sql
- */
-
--- set the variables for the github repo, as per 01_setup.sql
-SET MY_DATABASE = 'USERSPACE_IGNATIUS_SOPUTRO';
-SET MY_SCHEMA = $MY_DATABASE || '.X2';
-
-USE SCHEMA IDENTIFIER($MY_SCHEMA);
-
 -- Create revenue target table for each region
 CREATE OR REPLACE TABLE "TARGET_REVENUE_AU/NZ" AS
 SELECT "MONTH", TARGET_REVENUE
