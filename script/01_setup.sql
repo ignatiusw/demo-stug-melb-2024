@@ -50,8 +50,13 @@ SHOW TABLES IN SCHEMA IDENTIFIER($MY_SCHEMA);
 SHOW VIEWS IN SCHEMA IDENTIFIER($MY_SCHEMA);
 SHOW STREAMLITS IN SCHEMA IDENTIFIER($MY_SCHEMA);
 
--- create and load sample data by executing script on github
-SET MY_CMD = 'EXECUTE IMMEDIATE FROM @' || $MY_GITHUB_REPO || '/branches/main/script/02_prep-data.sql';
+-- create table and load sample data by executing script on github
+SET MY_CMD = 'EXECUTE IMMEDIATE FROM @' || $MY_GITHUB_REPO || '/branches/main/script/02_load-data.sql';
+SELECT $MY_CMD;
+EXECUTE IMMEDIATE $MY_CMD;
+
+-- create supplementary objects by executing script on github
+SET MY_CMD = 'EXECUTE IMMEDIATE FROM @' || $MY_GITHUB_REPO || '/branches/main/script/03_create-supp-objects.sql';
 SELECT $MY_CMD;
 EXECUTE IMMEDIATE $MY_CMD;
 
@@ -68,16 +73,6 @@ SELECT $MY_CMD;
 EXECUTE IMMEDIATE $MY_CMD;
 
 -- clean up
--- Drop streamlit app
-DROP STREAMLIT IF EXISTS TEST_GITHUB_INTEGRATION_STREAMLIT_APP;
-
--- Drop github repo
-DROP GIT REPOSITORY IF EXISTS IDENTIFIER($MY_GITHUB_REPO);
-
--- Clean up additional privileges
-USE ROLE SECURITYADMIN;
-REVOKE CREATE GIT REPOSITORY ON SCHEMA IDENTIFIER($MY_SCHEMA) FROM ROLE IDENTIFIER($MY_ROLE);
-
--- Drop github api integration
-USE ROLE SYSADMIN;
-DROP API INTEGRATION IF EXISTS IDENTIFIER($MY_GITHUB_INT);
+SET MY_CMD = 'EXECUTE IMMEDIATE FROM @' || $MY_GITHUB_REPO || '/branches/main/script/99_clean-up.sql';
+SELECT $MY_CMD;
+EXECUTE IMMEDIATE $MY_CMD;
