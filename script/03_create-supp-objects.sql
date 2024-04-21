@@ -1,15 +1,5 @@
-/* 
- * Make sure all the variables below are the same as per what's in 01_setup.sql
- */
-
--- set the variables for the github repo, as per 01_setup.sql
-SET MY_ROLE = 'ROL_IGNATIUS_SOPUTRO';
-SET MY_DATABASE = 'USERSPACE_IGNATIUS_SOPUTRO';
-SET MY_SCHEMA = $MY_DATABASE || '.X2';
-SET MY_VIEW = $MY_SCHEMA || '.REVENUE';
-
 -- Create a new view to produce sales forecast
-CREATE OR REPLACE VIEW USERSPACE_IGNATIUS_SOPUTRO.X2.REVENUE AS
+CREATE OR REPLACE VIEW REVENUE AS
 SELECT CAST("MONTH" AS TIMESTAMP_NTZ) AS "MONTH", REGION, GROSS_SALE - SALES_COST AS REVENUE
 FROM DEMO_DATA
 WHERE GROSS_SALE IS NOT NULL AND SALES_COST IS NOT NULL;
