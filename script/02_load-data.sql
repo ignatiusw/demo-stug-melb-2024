@@ -10,14 +10,40 @@ CREATE OR REPLACE FILE FORMAT MY_CSV_FORMAT
   TYPE = csv
   PARSE_HEADER = true;
 
--- create a table based on the demo_data.sql
+-- create a table based on the demo_data.csv
 CREATE OR REPLACE TABLE DEMO_DATA
 USING TEMPLATE (
   SELECT *
   FROM TABLE (
     INFER_SCHEMA (
-      LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data/demo_data.csv',
-      FILE_FORMAT=>'MY_CSV_FORMAT'
+      LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      FILE_FORMAT=>'MY_CSV_FORMAT',
+      FILES=>'demo_data.csv'
     )
   )
 );
+
+-- load demo_data
+COPY INTO DEMO_DATA
+FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+FILES = ('demo_data.csv')
+FILE_FORMAT = ( FORMAT_NAME = 'MY_CSV_FORMAT' );
+
+-- create a table based on store_pct.csv
+CREATE OR REPLACE TABLE STORE_PCT
+USING TEMPLATE (
+  SELECT *
+  FROM TABLE (
+    INFER_SCHEMA (
+      LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      FILE_FORMAT=>'MY_CSV_FORMAT',
+      FILES=>'store_pct.csv'
+    )
+  )
+);
+
+-- load store_pct
+COPY INTO STORE_PCT
+FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+FILES = ('store_pct.csv')
+FILE_FORMAT = ( FORMAT_NAME = 'MY_CSV_FORMAT' );
