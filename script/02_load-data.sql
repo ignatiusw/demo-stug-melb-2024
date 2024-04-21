@@ -16,7 +16,8 @@ USING TEMPLATE (
   SELECT *
   FROM TABLE (
     INFER_SCHEMA (
-      LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      --LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      LOCATION=>'@GITHUB_REPO_DEMO_STUG_MELB_2024_IGGY/branches/main/data',
       FILE_FORMAT=>'MY_CSV_FORMAT',
       FILES=>'demo_data.csv'
     )
@@ -25,7 +26,8 @@ USING TEMPLATE (
 
 -- load demo_data
 COPY INTO DEMO_DATA
-FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+--FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+FROM '@GITHUB_REPO_DEMO_STUG_MELB_2024_IGGY/branches/main/data'
 FILES = ('demo_data.csv')
 FILE_FORMAT = ( FORMAT_NAME = 'MY_CSV_FORMAT' );
 
@@ -35,7 +37,8 @@ USING TEMPLATE (
   SELECT *
   FROM TABLE (
     INFER_SCHEMA (
-      LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      --LOCATION=>'@' || $MY_GITHUB_REPO || '/branches/main/data',
+      LOCATION=>'@GITHUB_REPO_DEMO_STUG_MELB_2024_IGGY/branches/main/data',
       FILE_FORMAT=>'MY_CSV_FORMAT',
       FILES=>'store_pct.csv'
     )
@@ -44,6 +47,7 @@ USING TEMPLATE (
 
 -- load store_pct
 COPY INTO STORE_PCT
-FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+--FROM '@' || $MY_GITHUB_REPO || '/branches/main/data'
+FROM '@GITHUB_REPO_DEMO_STUG_MELB_2024_IGGY/branches/main/data'
 FILES = ('store_pct.csv')
 FILE_FORMAT = ( FORMAT_NAME = 'MY_CSV_FORMAT' );
