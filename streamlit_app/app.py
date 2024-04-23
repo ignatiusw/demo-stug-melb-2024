@@ -228,7 +228,14 @@ df_editable_target = session.table(
 with st.form("Update Target Revenue"):
     df_edited_target = st.data_editor(
         df_editable_target,
-        num_rows="dynamic"
+        num_rows="dynamic",
+        column_config={
+            "MONTH": "Month",
+            "TARGET_REVENUE": st.column_config.NumberColumn(
+                "Target Revenue",
+                format="$ %d",
+            ),
+        },
     )
     save_button = st.form_submit_button("Save")
 
